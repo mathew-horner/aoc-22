@@ -7,3 +7,4 @@ edition = "2021"
 
 [dependencies]
 anyhow = { version = "1.0", default-features = false, features = ["std"] }
+itertools = "0.10.5"

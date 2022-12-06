@@ -11,26 +11,12 @@ pub fn solution() {
 }
 
 fn find_first_marker(input: &str, count: usize) -> Option<usize> {
-    let mut iter = input.chars().enumerate();
-    let mut queue = VecDeque::new();
-    let mut i = 0;
-
-    for _ in 0..(count - 1) {
-        queue.push_back(iter.next().unwrap().1);
-    }
-
-    while let Some((i, next)) = iter.next() {
-        queue.push_back(next);
-        let unique: HashSet<char> = HashSet::from_iter(queue.iter().map(|&c| c));
-
-        if unique.len() == count {
-            return Some(i + 1);
-        }
-
-        _ = queue.pop_front();
-    }
-
-    None
+    let chars: Vec<_> = input.chars().collect();
+    chars
+        .windows(count)
+        .enumerate()
+        .find(|(_, window)| HashSet::<_>::from_iter(window.iter()).len() == count)
+        .map(|(i, _)| i + count)
 }
 
 #[cfg(test)]
